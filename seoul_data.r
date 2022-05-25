@@ -12,7 +12,7 @@ crime_cases[order(crime_cases$발생건수)]
 rownames(crime_cases)<-NULL
 crime_cases
 -------------------------------------------------------------------------------------
-crime=read.csv('crime_seoul.csv',fileEncoding="euc-kr")
+crime=read.csv('crime_seoul.csv',fileEncoding='euc-kr')
 head(crime)
 crime_cases<-crime[-1,c(1:3)]#불필요한 행,열들을 제거하기
 names(crime_cases)<-c('Year','District','Crime_cases')#각 열의 이름 정하기
