@@ -24,3 +24,22 @@ str(crime_cases)#데이터 타입 변환 확인하기
 #범죄발생수 높은 순으로 정렬(다시 해보기!!!)crime_cases[order(crime_cases$Crime_cases),]
 rownames(crime_cases)<-NULL
 crime_cases
+-------------------------------------------------------------------------------------
+pub=read.csv('pub_seoul.csv',fileEncoding='euc-kr')
+head(pub)
+pub2<-pub[c(2,4)]#영업상태 열, 주소 열만 추출하기
+head(pub2)
+names(pub2)<-c('Store','District')#각 열의 이름 정하기
+pub2<-pub2[!(pub2$Store==2),]#'2(폐업)'행들 제거하기
+head(pub2)
+#주소->구명으로 대체하기 위해 큰 방에서 작은 방을 추출하는 함수 만들기 
+search<-function(x){
+    x[2]
+}
+pub2$District_split<-strsplit(pub2$District, split=' ')
+pub2$District<-sapply(pub2$District_split,search)
+head(pub2)
+pub_seoul<-pub2[c(1,2)]
+pub_seoul
+#각 구 숫자 세기(다시 해보기!!!)
+#sapply참고 https://bluediary8.tistory.com/96
