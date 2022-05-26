@@ -43,3 +43,11 @@ pub_seoul<-pub2[c(1,2)]
 pub_seoul
 #각 구 숫자 세기(다시 해보기!!!)
 #sapply참고 https://bluediary8.tistory.com/96
+
+#search<-function(x){
+#    x[2]
+#}
+pub2$District_split<-strsplit(pub2$District, split=' ')
+pub2$District<-sapply(pub2$District_split,function(x){
+    x[2]
+})
