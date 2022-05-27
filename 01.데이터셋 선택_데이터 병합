@@ -15,3 +15,15 @@ df4 = join_all(list(df1, df2, df3), by="id", type="left")
 #데이터 합치기 : right join
 df4 = join_all(list(df1, df2, df3), by="id", type="right")
 ----------------------------------------------------------------
+rm(list = ls())
+cctv <- read.csv("cctv_seoul.csv")
+crime <- read.csv("crime_seoul.csv", fileEncoding = "euc-kr")
+onePerson <- read.csv("Oneperson.csv", fileEncoding = "euc-kr")
+police <- read.csv("police_seoul.csv", fileEncoding = "euc-kr")
+pub <- read.csv("pub_seoul.csv", fileEncoding = "euc-kr")
+install.packages("plyr")
+library(plyr)
+dataSeoul <- join_all(list(cctv, crime, onePerson, police, pub), by = "District", type = "full")
+head(dataSeoul)
+dataSeoul[,-3]
+write.csv(dataSeoul,'data_seoul.csv',row.names=TRUE)
