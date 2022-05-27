@@ -41,12 +41,17 @@ names(pub)<-c('Store','District')#각 열의 이름 정하기
 pub<-pub[!(pub$Store==2),]#'2(폐업)'행들 제거하기
 head(pub)
 str(pub)
-#주소->구명으로 대체하기 위해 큰 방안의 두번째 작은 방을 추출하는 함수 만들기 
-search<-function(x){
-    x[2]
-}
+#주소->구명으로 대체하기 위해 큰 방안의 두번째 작은 방을 추출하는 함수 만들기
+#search<-function(x){
+#    x[2]
+#}
 pub$District_split<-strsplit(pub$District, split=' ')
-pub$District<-sapply(pub$District_split,search)
+#search함수명을 sapply의 인자로 넣으면 x 인자가 누락되었다는 경고가 계속 뜸
+#pub$District<-sapply(pub$District_split,search)
+#sapply의 인자 자리에 함수 자제를 넣어줘야 함(함수 자체에 인자를 포함하고 있음)
+pub$District<-sapply(pub$District_split,function(x){
+    x[2]
+})
 head(pub)
 pub<-pub[c(1,2)]
 rownames(pub)<-NULL
