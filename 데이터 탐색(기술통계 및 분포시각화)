@@ -1,0 +1,19 @@
+finalData<-read.csv('data_comb.csv')
+finalData<-finalData[,-1]
+finalData$Police<-round(finalData$Police,2)
+finalData$CCTV<-round(finalData$CCTV)
+head(finalData)#head()를 통해 변수들을 확인
+str(finalData)#데이터의 모양을 확인
+#finalData$Oneperson<-as.numeric(finalData$Oneperson)
+#finalData$Pub<-as.numeric(finalData$Pub)
+#finalData$Crime<-as.numeric(finalData$Crime)
+install.packages('Hmisc')#기술통계정보를 알려주는 패키지 설치
+library(Hmisc)
+describe(finalData)#summary()와 유사하나 좀 더 다양한 요약정보를 제시
+summary(finalData)#데이터의 간략한 분포 정보 확인
+summary(Crime~Pub,finalData)
+plot(finalData)#plot()은 데이터를 크게 신경쓰지 않고 넘겨주어도 자동으로 적절한 형태의 그래프를 찾아줌
+plot(finalData$Crime)
+plot(Crime~Pub, data=finalData)
+library(caret)#caret의 featurePlot은 피처와 분류 간의 관련성을 쉽게 시각화해주는 함수-우리 데이터에는 별로..
+featurePlot(x=finalData[,3:6],y=finalData$Police,plot='ellipse')
