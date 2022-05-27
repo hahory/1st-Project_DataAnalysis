@@ -1,0 +1,53 @@
+finalData<-read.csv('data_comb.csv')
+finalData<-finalData[,-1]
+finalData$Police<-round(finalData$Police,2)
+finalData$CCTV<-round(finalData$CCTV)
+head(finalData)#head()를 통해 변수들을 확인
+str(finalData)#데이터의 모양을 확인
+#finalData$Oneperson<-as.numeric(finalData$Oneperson)
+#finalData$Pub<-as.numeric(finalData$Pub)
+#finalData$Crime<-as.numeric(finalData$Crime)
+install.packages('Hmisc')#기술통계정보를 알려주는 패키지 설치
+library(Hmisc)
+describe(finalData)#summary()와 유사하나 좀 더 다양한 요약정보를 제시
+summary(finalData)#데이터의 간략한 분포 정보 확인
+summary(Crime~Pub,finalData)
+plot(finalData)#plot()은 데이터를 크게 신경쓰지 않고 넘겨주어도 자동으로 적절한 형태의 그래프를 찾아줌
+plot(finalData$Crime)
+plot(Crime~Pub, data=finalData)
+library(caret)#caret의 featurePlot은 피처와 분류 간의 관련성을 쉽게 시각화해주는 함수-우리 데이터에는 별로..
+featurePlot(x=finalData[,3:6],y=finalData$Police,plot='ellipse')
+------------------------------------------------------------------------
+# kmeans cluster
+dataSeoul <- read.csv("data_seoul.csv")
+dataSeoul <- dataSeoul[, -1]
+str(dataSeoul)
+head(dataSeoul)
+# 변수들의 측정  단위가 다르고 변동폭이 크므로 평균 0, 표준편차 1로 표준화
+# scale()은 수치형만 넣어야하므로 'District'열 제거 후 표준화 진행
+dataSeoul_scaled <- scale(dataSeoul[, -1])
+# NbClust패키지: 최적의 군집개수를 알려주는 다양한 지표를 제공
+install.packages("NbClust")
+library(NbClust)
+# kmeans군집분석은 처음에 k개의 군집중심점을 임의로 선택하기 때문에 kmeans군집분석을 수행할 때마다 다른 결과를 얻을 수 있으므로
+# 실행할 때마다 동일한 결과가 나오도록 seed number를 지정
+set.seed(123)
+# 2-15개 사이의 군집을 탐색
+nc <- NbClust(dataSeoul_scaled, distance = "euclidean", method = "kmeans", min.nc = 2, max.nc = 15)
+nc$Best.nc
+table(nc$Best.nc[1, ])
+# 제안한 최적의 군집수로 데이터셋 분할
+set.seed(123)
+# nstart개수만큼 군집분석을 실행하여 보다 안정적인 결과 도출
+clustering_dataSeoul <- kmeans(dataSeoul_scaled, centers = 4, nstart = 25)
+clustering_dataSeoul$cluster # 각 구별 소속군집
+clustering_dataSeoul$centers # 최종 군집 중심점을 바탕의 각 군집의 특성을 유추할 수 있음
+# 1군집에서 cctv, police 높음
+# 2군집에서 cctv, police 낮음 & crime, pub 높음
+# 3군집은 1인 가구 많은데 비해 cctv, police 낮음-중요한 사실!!!!!
+clustering_dataSeoul$size # 각 군집의 크기
+#각 군집의 중심점은 표준화된 값으로 계산되므로 실제 측정단위로 된 평균값은 알 수 없음
+#원래 값으로 계산된 속성 평균을 알기 위해서는 aggregate()함수 이용
+aggregate(dataSeoul,by=list(cluster=clustering_dataSeoul$cluster),mean)
+library(cluster)
+clusplot(x=dataSeoul,clus=clustering_dataSeoul$cluster,color=TRUE,shade=,labels=2,lines=0,main='Cluster Plot')
