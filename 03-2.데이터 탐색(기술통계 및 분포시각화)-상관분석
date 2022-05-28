@@ -1,0 +1,34 @@
+dataSeoul <- read.csv("data_seoul.csv")
+dataSeoul <- dataSeoul[, -1]
+str(dataSeoul)
+# 산점도를 이용하여 변수간의 관계 패턴 확인
+# plot(dataSeoul$Crime ~ dataSeoul$Police, col = "forestgreen", pch = 19, xlab = "Police", ylab = "Crime", main = "Police vs Crime")
+# plot(dataSeoul$Crime ~ dataSeoul$cctv, col = "forestgreen", pch = 19, xlab = "CCTV", ylab = "Crime", main = "CCTV vs Crime")
+# plot(dataSeoul$Crime ~ dataSeoul$Pub, col = "forestgreen", pch = 19, xlab = "Pub", ylab = "Crime", main = "Pub vs Crime")
+# plot(dataSeoul$Crime ~ dataSeoul$Oneperson, col = "forestgreen", pch = 19, xlab = "Oneperson", ylab = "Crime", main = "Oneperson vs Crime")
+plot(dataSeoul[, -1])
+# 선형관계의 강도를 수치로 객관화하기 위해 상관계수를 알아봄
+# 상관계수는 선형변환에 의해 영향을 받지 않으므로 관측값이 어떤 단위로 측정되었든 변수사이의 상관계수는 항상 일정함
+# cor(dataSeoul$Crime,dataSeoul$Police)
+# cor(dataSeoul$Crime,dataSeoul$cctv)
+# cor(dataSeoul$Crime,dataSeoul$Pub)
+# cor(dataSeoul$Crime,dataSeoul$Oneperson)
+cor(dataSeoul[-1])
+# cor는 상관계수가 통계적으로 유의한지는 알려주지 않으므로 상관계수에 대한 유의성 검증을 해야 함(모집단에서의 상관계수가 0이라는 귀무가설을 검증)
+# cor.test(dataSeoul$Crime, dataSeoul$Police)
+# cor.test(dataSeoul$Crime, dataSeoul$cctv)
+# cor.test(dataSeoul$Crime, dataSeoul$Pub) # 범죄율과 가장 상관관계가 있다고 결론 내릴 수 있음
+# cor.test(dataSeoul$Crime, dataSeoul$Oneperson) # 강도는 약하나 범죄율과 두번째로 유의함
+# cor.test는 두개 이상의 상관계수를 동시에 검증하기는 어려우므로 'psych'패키지를 사용
+install.packages("psych")
+library(psych)
+corr.test(dataSeoul[-1])
+print(corr.test(dataSeoul[-1]), short = FALSE)
+# pairs.panel()함수는 산점도, 히스토그램, 상관계수를 동시에 보여줌
+pairs.panels(dataSeoul[-1])
+pairs.panels(dataSeoul[-1], pch = 21, bg = "red", hist.col = "gold", main = "Correlation Plot")
+# 변수간 상관계수 행렬을 시각화해주는 함수를 추가로 살펴봄
+install.packages("corrgram")
+library(corrgram)
+corrgram(dataSeoul[-1])
+corrgram(dataSeoul[-1], lower.panel = panel.shade, upper.panel = panel.pie, text.panel = panel.txt, order = TRUE, main = "Correlation Plot")
