@@ -1,0 +1,26 @@
+# pandas-PANnel DAta System의 약자
+# 빅데이터를 분석하는 데 최적화되어 있음. 파이썬으로 데이터를 불러오고 전처리하고 데이터를 다루는 경우, 파이썬에서 쓸 수 있는 엑셀이라고 볼 수 있음
+# 데이터 랭글링(Data Wrangling) 혹은 데이터 먼징(Data Munging)이라고 불리는 이것은 원자료(raw data)를 보다 쉽게 접근하고 분석할 수 있도록 데이터를 정리하고 통합하는 과정
+import pandas as pd
+
+# creating dataframes
+
+# list형태의 데이터를 넣는데 pandas에서는 이를 series라고 부름
+# df = pd.DataFrame({'a': [4, 5, 6],
+#                    'b': [7, 8, 9],
+#                    'c': [10, 11, 12]},
+#                   index=[1, 2, 3])
+df = pd.DataFrame([[4, 5, 6],
+                   [7, 8, 9],
+                   [10, 11, 12]],
+                  index=[1, 2, 3],
+                  columns=['a', 'b', 'c'])
+# a열에 해당하는 데이터를 가지고 옴. 이 때 반드시 대소문자를 지켜줘야 함
+print(df['a'])
+print(df[['a', 'b']])
+# 원하는 행의 데이터를 가져오고 싶을 때
+print(df.loc[1])
+print(df.loc[3, 'a'])
+print(df.loc[[1, 2], ['a', 'b']])
+
+# subset observations(rows)
