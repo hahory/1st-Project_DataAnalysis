@@ -1,4 +1,4 @@
-dataSeoul <- read.csv("data_seoul.csv")
+dataSeoul <- read.csv("data_comb.csv")
 dataSeoul <- dataSeoul[, -1]
 str(dataSeoul)
 # 산점도를 이용하여 변수간의 관계 패턴 확인
@@ -14,6 +14,7 @@ plot(dataSeoul[, -1])
 # cor(dataSeoul$Crime,dataSeoul$Pub)
 # cor(dataSeoul$Crime,dataSeoul$Oneperson)
 cor(dataSeoul[-1])
+#상관계수를 통해 Pub->CCTV순으로 상대적으로 강한 양의 상관관계가 있음을 확인
 # cor는 상관계수가 통계적으로 유의한지는 알려주지 않으므로 상관계수에 대한 유의성 검증을 해야 함(모집단에서의 상관계수가 0이라는 귀무가설을 검증)
 # cor.test(dataSeoul$Crime, dataSeoul$Police)
 # cor.test(dataSeoul$Crime, dataSeoul$cctv)
@@ -23,8 +24,11 @@ cor(dataSeoul[-1])
 install.packages("psych")
 library(psych)
 corr.test(dataSeoul[-1])
+#우선 p-value를 통해 Pub->CCTV순으로 Crime과 상관관계가 있다고 할 수 있음
+#추가적으로 상관계수의 95% 신뢰구간을 출력
 print(corr.test(dataSeoul[-1]), short = FALSE)
-# pairs.panel()함수는 산점도, 히스토그램, 상관계수를 동시에 보여줌
+#95% 신뢰구간 내에 0이 포함되어 있다면 귀무가설을 기각할 수 없음
+#pairs.panel()함수는 산점도, 히스토그램, 상관계수를 동시에 보여줌
 pairs.panels(dataSeoul[-1])
 pairs.panels(dataSeoul[-1], pch = 21, bg = "red", hist.col = "gold", main = "Correlation Plot")
 # 변수간 상관계수 행렬을 시각화해주는 함수를 추가로 살펴봄
