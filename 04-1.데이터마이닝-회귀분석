@@ -17,4 +17,4 @@ dataSeoul_scaled<-as.data.frame(dataSeoul_scaled)
 str(dataSeoul_scaled)
 summary(lm(formula = Crime~Police+CCTV+Oneperson+Pub, dataSeoul_scaled))
 #Pub->CCVT->Oneperson 순으로 통계적으로 유의함
-#결정계수가 0.8271로 높게 나타나 이 회귀식이 데이터를 적절하게 설명하고 있다고 할 수 있음.
+#결정계수(독립변수가 종속변수 변동의 몇 %를 설명하는지 나타내는 지표)가 0.8271로 높게 나타나 이 회귀식이 데이터를 적절하게 설명하고 있다고 할 수 있음.
