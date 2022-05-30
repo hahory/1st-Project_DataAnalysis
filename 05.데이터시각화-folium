@@ -1,0 +1,5 @@
+https://www.youtube.com/watch?v=h_gB6peKTgI
+----------------------------------------------
+import folium
+m = folium.Map(location=[37.52564321, 126.97013197], tiles='OpenStreetMap', zoom_start=11)
+m
