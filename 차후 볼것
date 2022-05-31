@@ -1,0 +1,13 @@
+#----------------------차후 볼것
+#잔차그래프: 데이터의 변수 수가 많을 경우, 선형성 가정을 검토하는 작업이 쉽지 않지만 모형의 잔차를 이용하면 선형성(입력변수와 출력변수의 관계는 선형이다), 독립성(입력변수와 오차는 관련이 없다), 정규성(오차의 분포가 정규분포를 따른다) 가정을 검토할 수 있는 장점이 있음
+#Q-Q plot은 Quantile-Quantile plot 의 약어. Quantile은 '분위수'.
+#Q-Q plot은 분위수들을 그래프로 그리는 것. 좌표평면에 있는 두개의 축에 서로 다른 두 데이터의 분위수를 각각 그려서 서로 비교하고 비교를 통해 두 데이터가 같은 분포를 따른는지 정성적인 판단을 함. 
+# 우리가 Q-Q plot을 사용할때는 주로 우리가 가진 데이터와 정규분포를 비교(정규성 검정)
+# - 넓은 의미의 Q-Q plot : 임의의 두 데이터 분포를 비교함
+# - 좁은 의미의 Q-Q plot : 정규성 검정의 한 방법
+qqnorm(dataSeoul$Crime)
+qqnorm(dataSeoul$CCTV)
+qqnorm(dataSeoul$Police)
+qqnorm(dataSeoul$Pub)
+qqnorm(dataSeoul$Oneperson)
+qqnorm(stdres(lm(formula = Crime~Police+CCTV+Oneperson+Pub, dataSeoul_scaled)))
