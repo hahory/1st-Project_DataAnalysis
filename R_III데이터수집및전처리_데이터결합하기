@@ -12,10 +12,11 @@ pub <- read.csv("rawData/pub.csv")
 install.packages("plyr")
 library(plyr)
 # =========================================================================
-# 여러 변수를 한 데이터 프레임으로 병합 및 확인하여 파일로 저장
+# 자치구명을 기준으로 여러 변수를 한 데이터 프레임으로 병합 및 확인하여 파일로 저장
 # =========================================================================
 dataSeoul <- join_all(list(cctv, crime, onePerson, police, pub),
     by = "District", type = "full"
 )
 head(dataSeoul)
 write.csv(dataSeoul, "dataSeoul.csv", row.names = FALSE)
+# =========================================================================
