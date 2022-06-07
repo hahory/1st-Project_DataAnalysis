@@ -1,0 +1,20 @@
+pub=read.csv('pub_raw.csv',fileEncoding='euc-kr')
+head(pub)
+str(pub)
+pub<-pub[c(2,4)]#영업상태 열, 주소 열만 추출하기
+head(pub)
+names(pub)<-c('pub','district')#각 열의 이름 정하기
+pub<-pub[!(pub$pub==2),]#'2(폐업)'행들 제거하기
+head(pub)
+str(pub) 
+pub$district_split<-strsplit(pub$district, split=' ')
+#주소->구명으로 대체하기 위해 큰 방에서 작은 방을 추출하는 함수를 sapply()의 인자로 넣어주기
+pub$district<-sapply(pub$district_split,function(x){
+    x[2]
+})
+head(pub)
+pub<-pub[c(1,2)]
+rownames(pub)<-NULL
+pub<-aggregate(pub~district,pub,sum)#aggregate()는 데이터를 분할하고 각 그룹마다 요약치를 계산함
+head(pub)
+write.csv(pub,'pub.csv',row.names=FALSE)
