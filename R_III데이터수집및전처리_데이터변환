@@ -1,0 +1,2 @@
+data_seoul<-read.csv('data_seoul.csv')
+str(data_seoul)
