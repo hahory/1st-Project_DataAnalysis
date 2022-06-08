@@ -1,0 +1,12 @@
+data_seoul<-read.csv('data_seoul.csv')
+area<-read.csv('area.csv')
+
+data_seoul<-merge(data_seoul, area)
+data_seoul$police<-round(data_seoul$police/data_seoul$area,4)
+data_seoul$cctv<-round(data_seoul$cctv/data_seoul$area,2)
+data_seoul$one_person<-round(data_seoul$one_person/data_seoul$area,2)
+data_seoul$pub<-round(data_seoul$pub/data_seoul$area,2)
+data_seoul$crime<-round(data_seoul$crime/data_seoul$area,2)
+
+head(data_seoul)
+write.csv(data_seoul,'data_seoul_dv.csv',row.names=FALSE)
