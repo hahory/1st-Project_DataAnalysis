@@ -1,0 +1,10 @@
+data_seoul <- read.csv("data_seoul_dv.csv")
+
+# 선형관계의 강도를 수치로 객관화하기 위해 상관계수를 알아봄
+cor(data_seoul[,-1])
+
+# cor는 상관계수가 통계적으로 유의한지는 알려주지 않으므로 상관계수에 대한 유의성 검증을 해야 함(모집단에서의 상관계수가 0이라는 귀무가설을 검증)
+# cor.test는 두개 이상의 상관계수를 동시에 검증하기는 어려우므로 'psych'패키지를 사용
+install.packages("psych")
+library(psych)
+corr.test(data_seoul[-1])
